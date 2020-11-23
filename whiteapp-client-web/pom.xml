@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project 
+    xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+        <groupId>com.github.zelmothedragon</groupId>
+        <artifactId>whiteapp</artifactId>
+        <version>0.0.2-SNAPSHOT</version>
+    </parent>
+  
+    <groupId>com.github.zelmothedragon.whiteapp</groupId>
+    <artifactId>whiteapp-client-web</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <name>whiteapp-client-web</name>
+    <description>WhiteApp web application</description>
+    
+    <properties>
+        <!-- Configuration de Maven -->
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    
+    <dependencies>  
+        <dependency>
+            <groupId>com.github.zelmothedragon.whiteapp</groupId>
+            <artifactId>whiteapp-common</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>      
+        <dependency>
+            <groupId>com.github.zelmothedragon.whiteapp</groupId>
+            <artifactId>whiteapp-server</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
+            <scope>provided</scope>
+            <type>ejb</type>
+        </dependency>
+        
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-web-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <!-- Source -->
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${version.java}</source>
+                    <target>${version.java}</target>
+                    <compilerArgs>
+                        <arg>-Xlint:all</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

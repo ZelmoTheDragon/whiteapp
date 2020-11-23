@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project 
+    xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
+    <modelVersion>4.0.0</modelVersion>
+         
+    <licenses>
+        <license>
+            <name>CeCILL 2.1</name>
+            <url>http://cecill.info/licences/Licence_CeCILL_V2.1-en.txt</url>
+            <comments>Licence française de logiciel libre</comments>
+        </license>
+    </licenses>
+      
+    <organization>
+        <name>GitHub</name>
+        <url>https://github.com</url>
+    </organization>
+      
+    <issueManagement>
+        <system>Github</system>
+        <url>https://github.com/ZelmoTheDragon/whiteapp/issues</url>
+    </issueManagement>
+      
+    <developers>
+        <developer>
+            <id>ZelmoTheDragon</id>
+            <name>MOSELLE Maxime</name>
+            <email>maximemoselle@gmail.com</email>
+            <organization>GitHub</organization>
+            <organizationUrl>https://github.com</organizationUrl>
+            <timezone>Europe/Paris</timezone>
+            <url>https://github.com/ZelmoTheDragon</url>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
+      
+    <groupId>com.github.zelmothedragon</groupId>
+    <artifactId>whiteapp</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>whiteapp</name>
+    <description>POM project of WhiteApp</description>
+    <url>https://github.com/ZelmoTheDragon/whiteapp</url>
+    
+    <modules>
+        <module>whiteapp-common</module>
+        <module>whiteapp-server</module>
+        <module>whiteapp-client-web</module>
+        <module>whiteapp</module>
+    </modules>
+      
+    
+    <properties>
+        <!-- Configuration de Maven -->
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+            
+        <!-- Version des dépendances -->
+        <version.java>11</version.java>
+        <version.jakarta>8.0.0</version.jakarta>
+        <version.eclipselink>2.7.7</version.eclipselink>
+                    
+        <!-- Serveur embarqué -->
+        <version.payara>5.2020.6</version.payara>
+            
+        <!-- Version des extensions -->
+        
+    </properties>
+      
+    <dependencyManagement>
+        <dependencies>
+            <!-- Jakarta EE -->
+            <dependency>
+                <groupId>jakarta.platform</groupId>
+                <artifactId>jakarta.jakartaee-api</artifactId>
+                <version>${version.jakarta}</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.platform</groupId>
+                <artifactId>jakarta.jakartaee-web-api</artifactId>
+                <version>${version.jakarta}</version>
+            </dependency>
+            
+            <!-- JPA - EclipseLink: génération du méta modèle -->
+            <dependency>
+                <groupId>org.eclipse.persistence</groupId>
+                <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
+                <version>${version.eclipselink}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+      
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- Serveur embarqué Payara Micro -->
+                <plugin>
+                    <groupId>fish.payara.maven.plugins</groupId>
+                    <artifactId>payara-micro-maven-plugin</artifactId>
+                    <version>1.3.0</version>
+                </plugin>
+                        
+                <!-- Extensions Jakarta EE -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-ear-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-ejb-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.3.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
+                
+                <!-- Extensions Maven par défaut -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.5.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>3.1.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.8.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.9.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>

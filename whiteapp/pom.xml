@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project 
+    xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+        <groupId>com.github.zelmothedragon</groupId>
+        <artifactId>whiteapp</artifactId>
+        <version>0.0.2-SNAPSHOT</version>
+    </parent>
+    
+    <groupId>com.github.zelmothedragon.whiteapp</groupId>
+    <artifactId>whiteapp</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
+    <packaging>ear</packaging>
+    <name>whiteapp</name>
+    <description>Packaging for enterprise server</description>
+    
+    <properties>
+        <!-- Configuration de Maven -->
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    
+    <dependencies>       
+        <dependency>
+            <groupId>com.github.zelmothedragon.whiteapp</groupId>
+            <artifactId>whiteapp-server</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
+            <scope>compile</scope>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>com.github.zelmothedragon.whiteapp</groupId>
+            <artifactId>whiteapp-client-web</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
+            <scope>compile</scope>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <!-- Source -->
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <configuration>
+                    <version>8</version>
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <skinnyWars>true</skinnyWars>
+                    <outputFileNameMapping>@{artifactId}@-@{version}@@{dashClassifier?}@.@{extension}@</outputFileNameMapping>
+                    <generateApplicationXml>true</generateApplicationXml>
+                    <applicationXml>${project.build.directory}/application.xml</applicationXml>
+                    <modules>
+                        <ejbModule>
+                            <groupId>com.github.zelmothedragon.whiteapp</groupId>
+                            <artifactId>whiteapp-server</artifactId>
+                        </ejbModule>
+                        <webModule>
+                            <groupId>com.github.zelmothedragon.whiteapp</groupId>
+                            <artifactId>whiteapp-client-web</artifactId>
+                            <contextRoot>/whiteapp</contextRoot>
+                        </webModule>
+                    </modules>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${version.java}</source>
+                    <target>${version.java}</target>
+                    <compilerArgs>
+                        <arg>-Xlint:all</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
+</project>
