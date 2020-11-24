@@ -73,7 +73,7 @@ public final class Constraint {
      * Constructeur interne. Pas d'instanciation.
      */
     private Constraint() {
-        throw new UnsupportedOperationException("No instances for you!");
+        throw new UnsupportedOperationException("Instance not allowed");
     }
 
     /**

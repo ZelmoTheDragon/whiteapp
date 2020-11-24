@@ -18,7 +18,7 @@ public final class EmptyObject {
      * Constructeur interne. Pas d'instanciation.
      */
     private EmptyObject() {
-        throw new UnsupportedOperationException("No instances for you!");
+        throw new UnsupportedOperationException("Instance not allowed");
     }
 
 }
