@@ -2,7 +2,7 @@ package com.github.zelmothedragon.whiteapp.enterprise.persistence;
 
 /**
  * Indique que les classes enfant sont identifiable par un identifiant unique.
- * Dans un modèle relationel, il s'agit de la clef primaire.
+ * Dans un modèle relationnel, il s'agit de la clef primaire.
  *
  * @author MOSELLE Maxime
  * @param <K> Type de l'identifiant unique
@@ -29,7 +29,7 @@ public interface Identifiable<K> {
      * Modifier l'identifiant unique de cette instance. Cette méthode est utile
      * pour le fonctionnement de certaines technologies d'entreprise.
      *
-     * @param id Nouvelle idenfiant unique non nul
+     * @param id Nouvelle identifiant unique non nul
      */
     void setId(K id);
 

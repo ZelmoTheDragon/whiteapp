@@ -160,7 +160,7 @@ public final class PasswordPolicy {
     }
 
     /**
-     * Vérifier si les mots de passe sont indentiques.
+     * Vérifier si les mots de passe sont identiques.
      *
      * @param password Mot de passe en clair
      * @param passwordEncoded Mot de passe encodé au format

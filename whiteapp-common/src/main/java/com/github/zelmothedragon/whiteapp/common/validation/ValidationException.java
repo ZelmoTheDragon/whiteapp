@@ -16,20 +16,18 @@ public final class ValidationException extends RuntimeException {
      * Construit une exception de validation d'objet.
      *
      * @param targetClass Classe de l'objet où la validation a échouée
-     * @see RuntimeException#RuntimeException(java.lang.String)
      */
     ValidationException(final Class<?> targetClass) {
-	super("Validation fail for object: " + targetClass.getName());
+        super("Validation fail for object: " + targetClass.getName());
     }
 
     /**
      * Construit une exception de validation d'objet.
      *
      * @param message Message d'erreur de validation
-     * @see RuntimeException#RuntimeException(java.lang.String)
      */
     ValidationException(final String message) {
-	super(message);
+        super(message);
     }
 
 }

@@ -22,7 +22,7 @@ public interface CheckedFunction<T, R> {
     R apply(T param) throws Exception;
 
     /**
-     * Encapsule une fonction de tel sorte à ne plus avoir besoin de capturer
+     * Encapsuler une fonction de tel sorte à ne plus avoir besoin de capturer
      * d'exception. En cas d'erreur, l'exception devient de type
      * {@link RuntimeException}.
      *

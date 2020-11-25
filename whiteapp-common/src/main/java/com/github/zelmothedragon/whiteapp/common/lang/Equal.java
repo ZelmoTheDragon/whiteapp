@@ -67,7 +67,7 @@ public final class Equal<T> {
      * Opération de terminaison, résout le calcul de l'égalité.
      *
      * @param me Instance courante
-     * @param target Enstance cible
+     * @param target Instance cible
      * @return La valeur <code>true</code> si les deux objets sont identiques,
      * sinon la valeur <code>false</code>
      */

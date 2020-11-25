@@ -143,7 +143,7 @@ public final class Constraint {
     }
 
     /**
-     * Vérifier q'une collection ne contient pas un objet spécifique.
+     * Vérifier qu'une collection ne contient pas un objet spécifique.
      *
      * @param collection Une collection quelconque
      * @param obj Un objet spécifique
@@ -189,7 +189,7 @@ public final class Constraint {
     }
 
     /**
-     * Vérifier q'un texte respecte le format d'une adresse de courriel.
+     * Vérifier qu'un texte respecte le format d'une adresse de courriel.
      *
      * @param text Un texte quelconque.
      * @return La valeur <code>true</code> si le texte respecte le format d'une

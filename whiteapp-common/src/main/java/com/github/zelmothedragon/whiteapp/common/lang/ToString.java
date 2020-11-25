@@ -99,7 +99,7 @@ public final class ToString<T> {
      * @param method Méthode permettant de renvoyer la valeur de l'attribut,
      * généralement un accesseur
      * @param target Instance de travail
-     * @return Une chaine de caractère sous forme de clef/valeur d'un attribut
+     * @return Une chaîne de caractères sous forme de clef/valeur d'un attribut
      * de l'objet de travail
      */
     private static <T> StringBuilder append(

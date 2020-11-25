@@ -12,32 +12,32 @@ import java.security.NoSuchAlgorithmException;
 public final class Hash {
 
     /**
-     * Algorithme de hachache MD5.
+     * Algorithme de hachage MD5.
      */
     public static final String MD5 = "MD5";
 
     /**
-     * Algorithme de hachache SHA-1.
+     * Algorithme de hachage SHA-1.
      */
     public static final String SHA1 = "SHA-1";
 
     /**
-     * Algorithme de hachache SHA-224.
+     * Algorithme de hachage SHA-224.
      */
     public static final String SHA224 = "SHA-224";
 
     /**
-     * Algorithme de hachache SHA-256.
+     * Algorithme de hachage SHA-256.
      */
     public static final String SHA256 = "SHA-256";
 
     /**
-     * Algorithme de hachache SHA-384.
+     * Algorithme de hachage SHA-384.
      */
     public static final String SHA384 = "SHA-384";
 
     /**
-     * Algorithme de hachache SHA-512.
+     * Algorithme de hachage SHA-512.
      */
     public static final String SHA512 = "SHA-512";
 
@@ -49,7 +49,7 @@ public final class Hash {
     }
 
     /**
-     * Hacher une chaine de caractère.
+     * Hacher une chaîne de caractères.
      *
      * @param algorithm L'algorithme de hachage (voir les constantes de cette
      * classe)

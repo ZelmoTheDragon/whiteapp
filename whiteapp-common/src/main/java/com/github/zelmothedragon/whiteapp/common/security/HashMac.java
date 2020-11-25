@@ -37,7 +37,7 @@ public final class HashMac {
     }
 
     /**
-     * Hacher une chaine de caractère avec une clef.
+     * Hacher une chaîne de caractères avec une clef.
      *
      * @param algorithm L'algorithme de hachage (voir les constantes de cette
      * classe)
