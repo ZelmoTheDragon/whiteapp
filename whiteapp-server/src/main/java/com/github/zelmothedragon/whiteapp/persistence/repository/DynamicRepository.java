@@ -1,14 +1,19 @@
 package com.github.zelmothedragon.whiteapp.persistence.repository;
 
 import com.github.zelmothedragon.whiteapp.enterprise.persistence.Identifiable;
+import com.github.zelmothedragon.whiteapp.enterprise.persistence.Pagination;
 import com.github.zelmothedragon.whiteapp.enterprise.persistence.Repository;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.enterprise.inject.spi.CDI;
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.metamodel.Attribute;
 
 /**
  * Entrepôt dynamique et générique pour n'importe quel type d'entité
@@ -201,5 +206,106 @@ public final class DynamicRepository {
         var query = builder.createQuery(entityClass);
         query.from(entityClass);
         return em.createQuery(query).getResultStream();
+    }
+
+    /**
+     * @see Repository#filter
+     * @param <K> Type de l'identifiant unique
+     * @param <E> Type de l'entité persistante
+     * @param entityClass Classe de l'entité persistante
+     * @param pagination Critère de filtrage pour la pagination
+     * @return Une liste d'entités persistantes
+     */
+    public static <K extends Serializable, E extends Identifiable<K>> List<E> filter(
+            final Class<E> entityClass,
+            final Pagination pagination) {
+
+        var em = CDI.current().select(EntityManager.class).get();
+        var builder = em.getCriteriaBuilder();
+        var query = builder.createQuery(entityClass);
+        var root = query.from(entityClass);
+        query.distinct(true);
+
+        if (Objects.nonNull(pagination.getKeyword())) {
+            String search = String.format("%%%s%%", pagination.getKeyword().trim().toLowerCase());
+
+            var restrictions = em
+                    .getMetamodel()
+                    .entity(entityClass)
+                    .getAttributes()
+                    .stream()
+                    .filter(a -> Objects.equals(a.getJavaType(), String.class))
+                    .map(a -> builder.like(builder.lower(root.get(a.getName())), search))
+                    .collect(Collectors.toList());
+
+            query.where(builder.or(restrictions.toArray(new Predicate[restrictions.size()])));
+        }
+
+        if (pagination.isOrdered()) {
+            var orderByAttributes = em
+                    .getMetamodel()
+                    .entity(entityClass)
+                    .getAttributes()
+                    .stream()
+                    .map(Attribute::getName)
+                    .filter(pagination.getOrderBy()::contains)
+                    .collect(Collectors.toList());
+
+            List<Order> orders;
+            if (orderByAttributes.isEmpty() && pagination.isAscending()) {
+                orders = List.of(builder.asc(root));
+            } else if (orderByAttributes.isEmpty() && !pagination.isAscending()) {
+                orders = List.of(builder.desc(root));
+            } else if (pagination.isAscending()) {
+                orders = orderByAttributes
+                        .stream()
+                        .map(a -> builder.asc(root.get(a)))
+                        .collect(Collectors.toList());
+            } else {
+                orders = orderByAttributes
+                        .stream()
+                        .map(a -> builder.desc(root.get(a)))
+                        .collect(Collectors.toList());
+            }
+            query.orderBy(orders);
+        }
+
+        List<E> result;
+        if (pagination.isNoLimit()) {
+            result = em
+                    .createQuery(query)
+                    .getResultList();
+        } else {
+            result = em
+                    .createQuery(query)
+                    .setFirstResult(pagination.getIndex())
+                    .setMaxResults(pagination.getPageSize())
+                    .getResultList();
+        }
+        return result;
+    }
+
+    /**
+     * @see Repository#filter
+     * @param <K> Type de l'identifiant unique
+     * @param <E> Type de l'entité persistante
+     * @param entityClass Classe de l'entité persistante
+     * @param keyword Mot clef pour la recherche
+     * @return Une liste d'entités persistantes
+     */
+    public static <K extends Serializable, E extends Identifiable<K>> List<E> filter(
+            final Class<E> entityClass,
+            final String keyword) {
+
+        var pagination = new Pagination(
+                keyword,
+                0,
+                -1,
+                List.of(),
+                true,
+                false
+        );
+
+        return DynamicRepository.filter(entityClass, pagination);
     }
 }

@@ -84,4 +84,19 @@ public interface Repository<K extends Serializable, E extends Identifiable<K>> {
      */
     Stream<E> stream();
 
+    /**
+     * Rechercher des entités enregistrées avec un critère de pagination.
+     *
+     * @param pagination Critère de pagination
+     * @return Une liste contenant toutes les occurrences filtrée
+     */
+    List<E> filter(Pagination pagination);
+
+    /**
+     * Rechercher des entités enregistrées en fonction d'un mot clef.
+     *
+     * @param keyword Mot clef pour la recherche
+     * @return Une liste contenant toutes les occurrences filtrée
+     */
+    List<E> filter(String keyword);
 }
