@@ -9,7 +9,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.spi.CDI;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
@@ -21,13 +23,30 @@ import javax.persistence.metamodel.Attribute;
  *
  * @author MOSELLE Maxime
  */
-public final class DynamicRepository {
+@ApplicationScoped
+public class DynamicRepository {
 
     /**
-     * Constructeur interne. Pas d'instanciation.
+     * Gestionnaire d'entité.
      */
-    private DynamicRepository() {
-        throw new UnsupportedOperationException("Instance not allowed");
+    @Inject
+    private EntityManager em;
+
+    /**
+     * Constructeur par défaut. Requis pour le fonctionnement des technologies
+     * de <i>Jakarta EE</i>.
+     */
+    public DynamicRepository() {
+        // Ne pas appeler explicitement.
+    }
+
+    /**
+     * Récupérer l'instance unique de travail.
+     *
+     * @return L'instance unique
+     */
+    public static DynamicRepository getInstance() {
+        return CDI.current().select(DynamicRepository.class).get();
     }
 
     /**
@@ -38,8 +57,7 @@ public final class DynamicRepository {
      * @param entity Nouvelle entité
      * @return L'instance de l'entité synchronisé
      */
-    public static <K extends Serializable, E extends Identifiable<K>> E add(final E entity) {
-        var em = CDI.current().select(EntityManager.class).get();
+    public <K extends Serializable, E extends Identifiable<K>> E add(final E entity) {
         E attachedEntity;
 
         if (em.contains(entity)) {
@@ -58,8 +76,7 @@ public final class DynamicRepository {
      * @param <E> Type de l'entité persistante
      * @param entity Entité à supprimer
      */
-    public static <K extends Serializable, E extends Identifiable<K>> void remove(final E entity) {
-        var em = CDI.current().select(EntityManager.class).get();
+    public <K extends Serializable, E extends Identifiable<K>> void remove(final E entity) {
         var entityClass = entity.getClass();
         var primaryKey = entity.getId();
         var attachedEntity = em.getReference(entityClass, primaryKey);
@@ -74,8 +91,7 @@ public final class DynamicRepository {
      * @param entityClass Classe de l'entité persistante
      * @param id Identifiant unique
      */
-    public static <K extends Serializable, E extends Identifiable<K>> void remove(final Class<E> entityClass, final K id) {
-        var em = CDI.current().select(EntityManager.class).get();
+    public <K extends Serializable, E extends Identifiable<K>> void remove(final Class<E> entityClass, final K id) {
         var attachedEntity = em.getReference(entityClass, id);
         em.remove(attachedEntity);
     }
@@ -89,8 +105,7 @@ public final class DynamicRepository {
      * @return La valeur {@code true} si l'entité existe déjà, sinon la valeur
      * {@code false} est retournée
      */
-    public static <K extends Serializable, E extends Identifiable<K>> boolean contains(final E entity) {
-        var em = CDI.current().select(EntityManager.class).get();
+    public <K extends Serializable, E extends Identifiable<K>> boolean contains(final E entity) {
         boolean exist;
         if (em.contains(entity)) {
             exist = true;
@@ -123,8 +138,7 @@ public final class DynamicRepository {
      * @return La valeur {@code true} si l'entité existe déjà, sinon la valeur
      * {@code false} est retournée
      */
-    public static <K extends Serializable, E extends Identifiable<K>> boolean contains(final Class<E> entityClass, final K id) {
-        var em = CDI.current().select(EntityManager.class).get();
+    public <K extends Serializable, E extends Identifiable<K>> boolean contains(final Class<E> entityClass, final K id) {
         var attachedEntity = em.find(entityClass, id);
         boolean exist;
         if (Objects.nonNull(attachedEntity)) {
@@ -152,8 +166,7 @@ public final class DynamicRepository {
      * @param <E> Type de l'entité persistante
      * @param entityClass Classe de l'entité persistante
      */
-    public static <K extends Serializable, E extends Identifiable<K>> void clear(final Class<E> entityClass) {
-        var em = CDI.current().select(EntityManager.class).get();
+    public <K extends Serializable, E extends Identifiable<K>> void clear(final Class<E> entityClass) {
         var builder = em.getCriteriaBuilder();
         var query = builder.createCriteriaDelete(entityClass);
         query.from(entityClass);
@@ -170,8 +183,7 @@ public final class DynamicRepository {
      * @return Une option contenant ou non l'entité correspondante à
      * l'identifiant unique
      */
-    public static <K extends Serializable, E extends Identifiable<K>> Optional<E> findFirst(final Class<E> entityClass, final K id) {
-        var em = CDI.current().select(EntityManager.class).get();
+    public <K extends Serializable, E extends Identifiable<K>> Optional<E> findFirst(final Class<E> entityClass, final K id) {
         var entity = em.find(entityClass, id);
         return Optional.ofNullable(entity);
     }
@@ -184,8 +196,7 @@ public final class DynamicRepository {
      * @param entityClass Classe de l'entité persistante
      * @return Une liste contenant toutes les occurrences
      */
-    public static <K extends Serializable, E extends Identifiable<K>> List<E> values(final Class<E> entityClass) {
-        var em = CDI.current().select(EntityManager.class).get();
+    public <K extends Serializable, E extends Identifiable<K>> List<E> values(final Class<E> entityClass) {
         var builder = em.getCriteriaBuilder();
         var query = builder.createQuery(entityClass);
         query.from(entityClass);
@@ -200,8 +211,7 @@ public final class DynamicRepository {
      * @param entityClass Classe de l'entité persistante
      * @return Une séquence contenant toutes les occurrences
      */
-    public static <K extends Serializable, E extends Identifiable<K>> Stream<E> stream(final Class<E> entityClass) {
-        var em = CDI.current().select(EntityManager.class).get();
+    public <K extends Serializable, E extends Identifiable<K>> Stream<E> stream(final Class<E> entityClass) {
         var builder = em.getCriteriaBuilder();
         var query = builder.createQuery(entityClass);
         query.from(entityClass);
@@ -216,11 +226,10 @@ public final class DynamicRepository {
      * @param pagination Critère de filtrage pour la pagination
      * @return Une liste d'entités persistantes
      */
-    public static <K extends Serializable, E extends Identifiable<K>> List<E> filter(
+    public <K extends Serializable, E extends Identifiable<K>> List<E> filter(
             final Class<E> entityClass,
             final Pagination pagination) {
 
-        var em = CDI.current().select(EntityManager.class).get();
         var builder = em.getCriteriaBuilder();
         var query = builder.createQuery(entityClass);
         var root = query.from(entityClass);
@@ -293,7 +302,7 @@ public final class DynamicRepository {
      * @param keyword Mot clef pour la recherche
      * @return Une liste d'entités persistantes
      */
-    public static <K extends Serializable, E extends Identifiable<K>> List<E> filter(
+    public <K extends Serializable, E extends Identifiable<K>> List<E> filter(
             final Class<E> entityClass,
             final String keyword) {
 
@@ -306,6 +315,6 @@ public final class DynamicRepository {
                 false
         );
 
-        return DynamicRepository.filter(entityClass, pagination);
+        return filter(entityClass, pagination);
     }
 }

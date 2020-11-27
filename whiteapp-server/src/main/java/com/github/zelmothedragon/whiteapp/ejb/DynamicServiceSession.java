@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 
 /**
  * Implémentation <i>EJB</i> des services métiers communs.
@@ -17,6 +18,12 @@ import javax.ejb.Stateless;
 @Local(DynamicService.class)
 @Stateless
 public class DynamicServiceSession implements DynamicService {
+
+    /**
+     * Entrepôt dynamique d'entité.
+     */
+    @Inject
+    private DynamicRepository repository;
 
     /**
      * Constructeur par défaut. Requis pour le fonctionnement des technologies
@@ -29,12 +36,12 @@ public class DynamicServiceSession implements DynamicService {
     @Override
     public <K extends Serializable, E extends Identifiable<K>> E save(final E entity) {
         entity.synchronizeId();
-        return DynamicRepository.add(entity);
+        return repository.add(entity);
     }
 
     @Override
     public <K extends Serializable, E extends Identifiable<K>> void remove(final E entity) {
-        DynamicRepository.remove(entity);
+        repository.remove(entity);
     }
 
     @Override
@@ -42,12 +49,12 @@ public class DynamicServiceSession implements DynamicService {
             final Class<E> entityClass,
             final K id) {
 
-        DynamicRepository.remove(entityClass, id);
+        repository.remove(entityClass, id);
     }
 
     @Override
     public <K extends Serializable, E extends Identifiable<K>> boolean contains(final E entity) {
-        return DynamicRepository.contains(entity);
+        return repository.contains(entity);
     }
 
     @Override
@@ -55,12 +62,12 @@ public class DynamicServiceSession implements DynamicService {
             final Class<E> entityClass,
             final K id) {
 
-        return DynamicRepository.contains(entityClass, id);
+        return repository.contains(entityClass, id);
     }
 
     @Override
     public <K extends Serializable, E extends Identifiable<K>> void clear(final Class<E> entityClass) {
-        DynamicRepository.clear(entityClass);
+        repository.clear(entityClass);
     }
 
     @Override
@@ -68,12 +75,12 @@ public class DynamicServiceSession implements DynamicService {
             final Class<E> entityClass,
             final K id) {
 
-        return DynamicRepository.findFirst(entityClass, id);
+        return repository.findFirst(entityClass, id);
     }
 
     @Override
     public <K extends Serializable, E extends Identifiable<K>> List<E> values(final Class<E> entityClass) {
-        return DynamicRepository.values(entityClass);
+        return repository.values(entityClass);
     }
 
     @Override
@@ -81,7 +88,7 @@ public class DynamicServiceSession implements DynamicService {
             final Class<E> entityClass,
             final Pagination pagination) {
 
-        return DynamicRepository.filter(entityClass, pagination);
+        return repository.filter(entityClass, pagination);
     }
 
     @Override
@@ -89,7 +96,7 @@ public class DynamicServiceSession implements DynamicService {
             final Class<E> entityClass,
             final String keyword) {
 
-        return DynamicRepository.filter(entityClass, keyword);
+        return repository.filter(entityClass, keyword);
     }
 
 }
