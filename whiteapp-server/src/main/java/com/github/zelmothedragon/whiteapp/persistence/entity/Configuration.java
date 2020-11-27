@@ -1,6 +1,5 @@
 package com.github.zelmothedragon.whiteapp.persistence.entity;
 
-import com.github.zelmothedragon.whiteapp.enterprise.persistence.Identifiable;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -10,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * Configuration de l'application. Désigne une propriété ou un élément de
@@ -21,7 +21,7 @@ import javax.validation.constraints.NotBlank;
  */
 @Entity
 @Table(name = "configuration")
-public class Configuration implements Identifiable<ConfigurationKey>, Serializable {
+public class Configuration implements Serializable {
 
     /**
      * Numéro de série.
@@ -31,13 +31,15 @@ public class Configuration implements Identifiable<ConfigurationKey>, Serializab
     /**
      * Clef primaire.
      */
+    @NotNull
     @Id
     @Enumerated(EnumType.STRING)
     @Column(name = "id", nullable = false, unique = true)
     private ConfigurationKey id;
 
     /**
-     * Valeur.
+     * Valeur. Attention, cette information peut être sensible, ne pas publier
+     * cette information dans les journaux applicatif.
      */
     @NotBlank
     @Column(name = "value", nullable = false)
@@ -55,6 +57,46 @@ public class Configuration implements Identifiable<ConfigurationKey>, Serializab
      */
     public Configuration() {
         // Ne pas appeler explicitement.
+    }
+
+    /**
+     * Convertir la valeur sous forme numérique. Si la valeur ne peut pas être
+     * convertie, une exception est levée.
+     *
+     * @return La valeur numérique
+     */
+    public Integer asInteger() {
+        return Integer.parseInt(value);
+    }
+
+    /**
+     * Convertir la valeur sous forme numérique. Si la valeur ne peut pas être
+     * convertie, une exception est levée.
+     *
+     * @return La valeur numérique
+     */
+    public Long asLong() {
+        return Long.parseLong(value);
+    }
+
+    /**
+     * Convertir la valeur sous forme numérique. Si la valeur ne peut pas être
+     * convertie, une exception est levée.
+     *
+     * @return La valeur numérique
+     */
+    public Float asFloat() {
+        return Float.parseFloat(value);
+    }
+
+    /**
+     * Convertir la valeur sous forme numérique. Si la valeur ne peut pas être
+     * convertie, une exception est levée.
+     *
+     * @return La valeur numérique
+     */
+    public Double asDouble() {
+        return Double.parseDouble(value);
     }
 
     @Override
@@ -84,27 +126,20 @@ public class Configuration implements Identifiable<ConfigurationKey>, Serializab
                 .append("Configuration{id=")
                 .append(id)
                 .append(", value=")
-                .append(value)
+                .append("<hidden>")
                 .append(", description=")
                 .append(description)
                 .append('}')
                 .toString();
     }
 
-    @Override
-    public boolean synchronizeId() {
-        return false;
-    }
-
     // ------------------------------
     // Accesseurs & Mutateurs
     // ------------------------------
-    @Override
     public ConfigurationKey getId() {
         return id;
     }
 
-    @Override
     public void setId(ConfigurationKey id) {
         this.id = id;
     }
