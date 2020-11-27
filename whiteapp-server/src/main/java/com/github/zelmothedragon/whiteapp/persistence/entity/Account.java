@@ -43,7 +43,7 @@ public class Account extends AbstractEntity {
      * Mot de passe (haché).
      */
     @NotBlank
-    @Column(name = "password")
+    @Column(name = "password", nullable = false, length = 512)
     private String password;
 
     /**
