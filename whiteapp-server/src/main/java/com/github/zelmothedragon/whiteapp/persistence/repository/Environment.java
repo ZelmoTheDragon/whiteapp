@@ -33,7 +33,7 @@ public class Environment {
 
     /**
      * Constructeur par défaut. Requis pour le fonctionnement des technologies
-     * de <i>Jakarta EE</i>.
+     * d'entreprise.
      */
     public Environment() {
         this.cache = new HashMap<>();

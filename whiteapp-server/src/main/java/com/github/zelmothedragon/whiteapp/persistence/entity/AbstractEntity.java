@@ -46,7 +46,7 @@ public abstract class AbstractEntity implements Identifiable<UUID>, Serializable
 
     /**
      * Constructeur par défaut. Requis pour le fonctionnement des technologies
-     * de <i>Jakarta EE</i>.
+     * d'entreprise.
      */
     protected AbstractEntity() {
         this.id = UUID.randomUUID();

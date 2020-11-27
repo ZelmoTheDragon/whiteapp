@@ -53,7 +53,7 @@ public class Configuration implements Serializable {
 
     /**
      * Constructeur par défaut. Requis pour le fonctionnement des technologies
-     * de <i>Jakarta EE</i>.
+     * d'entreprise.
      */
     public Configuration() {
         // Ne pas appeler explicitement.

@@ -22,7 +22,7 @@ public class PersistenceResource {
 
     /**
      * Constructeur par défaut. Requis pour le fonctionnement des technologies
-     * de Jakarta EE.
+     * d'entreprise.
      */
     public PersistenceResource() {
         // Ne pas appeler explicitement.

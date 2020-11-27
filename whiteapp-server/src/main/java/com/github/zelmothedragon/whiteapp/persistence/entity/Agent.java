@@ -86,7 +86,7 @@ public class Agent extends AbstractEntity {
 
     /**
      * Constructeur par défaut. Requis pour le fonctionnement des technologies
-     * de <i>Jakarta EE</i>.
+     * d'entreprise.
      */
     public Agent() {
         // Ne pas appeler explicitement.

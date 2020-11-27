@@ -27,7 +27,7 @@ public class DynamicServiceSession implements DynamicService {
 
     /**
      * Constructeur par défaut. Requis pour le fonctionnement des technologies
-     * de <i>Jakarta EE</i>.
+     * d'entreprise.
      */
     public DynamicServiceSession() {
         // Ne pas appeler explicitement.

@@ -20,7 +20,7 @@ public class UUIDConverter implements AttributeConverter<UUID, String> {
 
     /**
      * Constructeur par défaut. Requis pour le fonctionnement des technologies
-     * de Jakarta EE.
+     * d'entreprise.
      */
     public UUIDConverter() {
         // Ne pas appeler explicitement
