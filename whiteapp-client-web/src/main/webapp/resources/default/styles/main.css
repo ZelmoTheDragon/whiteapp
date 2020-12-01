@@ -1,0 +1,36 @@
+html{
+    font-family: Helvetica, sans-serif;
+    background: aliceblue;
+}
+
+.version{
+    color: olive;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    margin: 0 0.2em 0 0.2em;
+}
+
+.select-lang ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+}
+
+.select-lang li {
+    margin: 0 0.2em 0 0.2em;
+}
+
+.center{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+/** Primefaces**/
+
+body .ui-panelgrid .ui-panelgrid-content{
+    border: 0px;
+}

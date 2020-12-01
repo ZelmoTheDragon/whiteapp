@@ -12,7 +12,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -60,10 +59,10 @@ public class Account extends AbstractEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "account_role",
-            joinColumns = @JoinColumn(name = "account_id", nullable = false)
+            joinColumns = @JoinColumn(name = "account_id", nullable = false, referencedColumnName = "id")
     )
     @Column(name = "role_name", nullable = false)
-    private Set<@NotEmpty @Size(max = 255) String> roles;
+    private Set<@NotBlank @Size(max = 255) String> roles;
 
     /**
      * Constructeur par défaut. Requis pour le fonctionnement des technologies

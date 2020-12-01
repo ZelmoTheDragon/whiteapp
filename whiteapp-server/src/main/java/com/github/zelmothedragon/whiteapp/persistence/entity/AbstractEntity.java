@@ -31,7 +31,7 @@ public abstract class AbstractEntity implements Identifiable<UUID>, Serializable
      */
     @NotNull
     @Id
-    @Column(name = "id", nullable = false, unique = true)
+    @Column(name = "id", nullable = false)
     protected UUID id;
 
     /**

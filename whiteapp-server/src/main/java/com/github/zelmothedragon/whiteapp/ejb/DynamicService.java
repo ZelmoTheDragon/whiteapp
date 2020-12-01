@@ -66,6 +66,7 @@ public interface DynamicService {
      *
      * @param <K> Type de l'identifiant unique
      * @param <E> Type générique de l'entité
+     * @param entityClass Classe de l'entité
      */
     <K extends Serializable, E extends Identifiable<K>> void clear(Class<E> entityClass);
 
