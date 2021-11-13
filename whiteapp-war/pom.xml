@@ -9,15 +9,15 @@
     <parent>
         <groupId>com.github.zelmothedragon</groupId>
         <artifactId>whiteapp</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.1.0-SNAPSHOT</version>
     </parent>
-    
+  
     <groupId>com.github.zelmothedragon.whiteapp</groupId>
-    <artifactId>whiteapp</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
-    <packaging>ear</packaging>
-    <name>whiteapp</name>
-    <description>Packaging for enterprise server</description>
+    <artifactId>whiteapp-war</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <name>whiteapp-war</name>
+    <description>WhiteApp web application</description>
     
     <properties>
         <!-- Configuration de Maven -->
@@ -25,20 +25,36 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     
-    <dependencies>       
+    <dependencies>  
         <dependency>
             <groupId>com.github.zelmothedragon.whiteapp</groupId>
-            <artifactId>whiteapp-server</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
-            <scope>compile</scope>
+            <artifactId>whiteapp-common</artifactId>
+            <version>0.1.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>      
+        <dependency>
+            <groupId>com.github.zelmothedragon.whiteapp</groupId>
+            <artifactId>whiteapp-ejb</artifactId>
+            <version>0.1.0-SNAPSHOT</version>
+            <scope>provided</scope>
             <type>ejb</type>
         </dependency>
+        
         <dependency>
-            <groupId>com.github.zelmothedragon.whiteapp</groupId>
-            <artifactId>whiteapp-client-web</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-web-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
             <scope>compile</scope>
-            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>primeflex</artifactId>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     
@@ -55,26 +71,7 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-ear-plugin</artifactId>
-                <configuration>
-                    <version>8</version>
-                    <defaultLibBundleDir>lib</defaultLibBundleDir>
-                    <skinnyWars>true</skinnyWars>
-                    <outputFileNameMapping>@{artifactId}@-@{version}@@{dashClassifier?}@.@{extension}@</outputFileNameMapping>
-                    <generateApplicationXml>true</generateApplicationXml>
-                    <applicationXml>${project.build.directory}/application.xml</applicationXml>
-                    <modules>
-                        <ejbModule>
-                            <groupId>com.github.zelmothedragon.whiteapp</groupId>
-                            <artifactId>whiteapp-server</artifactId>
-                        </ejbModule>
-                        <webModule>
-                            <groupId>com.github.zelmothedragon.whiteapp</groupId>
-                            <artifactId>whiteapp-client-web</artifactId>
-                            <contextRoot>/whiteapp</contextRoot>
-                        </webModule>
-                    </modules>
-                </configuration>
+                <artifactId>maven-war-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -89,5 +86,4 @@
             </plugin>
         </plugins>
     </build>
-    
 </project>

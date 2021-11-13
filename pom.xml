@@ -41,17 +41,18 @@
       
     <groupId>com.github.zelmothedragon</groupId>
     <artifactId>whiteapp</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>whiteapp</name>
     <description>POM project of WhiteApp</description>
     <url>https://github.com/ZelmoTheDragon/whiteapp</url>
     
     <modules>
+        <module>whiteapp-ear</module>
+        <module>whiteapp-ejb</module>
+        <module>whiteapp-war</module>
         <module>whiteapp-common</module>
-        <module>whiteapp-server</module>
-        <module>whiteapp-client-web</module>
-        <module>whiteapp</module>
+        <module>whiteapp-dynamic</module>
     </modules>
       
     
@@ -65,7 +66,8 @@
         <version.jakarta>8.0.0</version.jakarta>
         <version.eclipselink>2.7.7</version.eclipselink>
         <version.primefaces>8.0</version.primefaces>
-        <primeflex.version>2.0.0</primeflex.version>
+        <version.primeflex>2.0.0</version.primeflex>
+        <version.lombok>1.18.22</version.lombok>
                     
         <!-- Serveur embarqué -->
         <version.payara>5.2020.6</version.payara>
@@ -95,6 +97,13 @@
                 <version>${version.eclipselink}</version>
             </dependency>
             
+            <!-- Utilitaire -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${version.lombok}</version>
+            </dependency>
+            
             <!-- Bibliothèque graphique -->
             <dependency>
                 <groupId>org.primefaces</groupId>
@@ -104,7 +113,7 @@
             <dependency>
                 <groupId>org.webjars.npm</groupId>
                 <artifactId>primeflex</artifactId>
-                <version>${primeflex.version}</version>
+                <version>${version.primeflex}</version>
             </dependency>
             
         </dependencies>
